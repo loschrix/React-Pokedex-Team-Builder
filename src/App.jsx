@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Searchbar from "./components/Searchbar/Searchbar.jsx";
 import "./app.css";
+import PokedexGrid from "./components/PokedexGrid/PokedexGrid.jsx";
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
             {/* Lewa kolumna: 70% */}
             <section className="pokedex-column">
                 <Searchbar></Searchbar>
-                {/* Tutaj będzie lista Pokemonów */}
+                <PokedexGrid></PokedexGrid>
             </section>
 
             {/* Prawa kolumna: 30% */}

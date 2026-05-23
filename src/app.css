@@ -1,0 +1,31 @@
+.main-layout {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 2rem;
+
+    padding: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    align-items: start;
+}
+
+.pokedex-column {
+    width: 100%;
+}
+
+.team-column {
+    width: 100%;
+    position: sticky;
+    top: 100px;
+}
+
+@media (max-width: 992px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .team-column {
+        position: static;
+    }
+}

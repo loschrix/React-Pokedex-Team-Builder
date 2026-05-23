@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "checkJs": false
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.d.ts"
+  ]
+}

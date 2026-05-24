@@ -3,6 +3,10 @@ import { fetchKantoList, fetchPokemonDetails } from "./pokemonApi.js";
 
 const PAGE_SIZE = 20;
 
+/**
+ * @param {{ page: number, pokemons: any[] }} state
+ * @param {{ type: string, page?: number, payload?: any[] }} action
+ */
 function paginationReducer(state, action) {
     switch (action.type) {
         case "reset":
@@ -25,7 +29,7 @@ function paginationReducer(state, action) {
 }
 
 export function usePokemonData(searchQuery = "") {
-    const [basePokemons, setBasePokemons] = useState([]);
+    const [basePokemons, setBasePokemons] = useState(/** @type {any[]} */ ([]));
     const [{ page, pokemons }, dispatch] = useReducer(paginationReducer, { page: 0, pokemons: [] });
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -35,14 +39,14 @@ export function usePokemonData(searchQuery = "") {
 
         async function loadInitialData() {
             try {
-                const results = await fetchKantoList();
+                const results = /** @type {any[]} */ (await fetchKantoList());
                 if (isMounted) setBasePokemons(results);
             } catch (err) {
                 if (isMounted) setError(err.message);
             }
         }
 
-        loadInitialData();
+        void loadInitialData();
 
         return () => { isMounted = false; };
     }, []);
@@ -53,7 +57,7 @@ export function usePokemonData(searchQuery = "") {
         const normalizedQuery = searchQuery.toLowerCase().trim();
 
         return basePokemons.filter(p => {
-            const id = p.url.split("/").filter(Boolean).pop();
+            const id = p.url.split("/").filter(part => Boolean(part)).pop();
             return p.name.includes(normalizedQuery) ||
                 id === normalizedQuery ||
                 id === String(parseInt(normalizedQuery, 10));
@@ -83,7 +87,9 @@ export function usePokemonData(searchQuery = "") {
                     return;
                 }
 
-                const details = await Promise.all(sliceToLoad.map(p => fetchPokemonDetails(p.url)));
+                const details = /** @type {any[]} */ (
+                    await Promise.all(sliceToLoad.map(p => fetchPokemonDetails(p.url)))
+                );
 
                 if (isMounted) {
                     dispatch({ type: "appendPage", page, payload: details });
@@ -95,7 +101,7 @@ export function usePokemonData(searchQuery = "") {
             }
         }
 
-        loadPageDetails();
+        void loadPageDetails();
 
         return () => { isMounted = false; };
     }, [page, filteredBasePokemons]);

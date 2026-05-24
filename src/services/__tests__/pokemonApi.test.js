@@ -2,7 +2,7 @@ import { fetchKantoList, fetchPokemonDetails } from '../pokemonApi.js';
 
 describe('pokemonApi', () => {
   test('fetchKantoList returns results when request succeeds', async () => {
-    global.fetch.mockResolvedValue({
+    globalThis.fetch.mockResolvedValue({
       ok: true,
       json: async () => ({ results: [{ name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' }] }),
     });
@@ -13,13 +13,13 @@ describe('pokemonApi', () => {
   });
 
   test('fetchKantoList throws when request fails', async () => {
-    global.fetch.mockResolvedValue({ ok: false });
+    globalThis.fetch.mockResolvedValue({ ok: false });
 
     await expect(fetchKantoList()).rejects.toThrow('Failed to fetch Kanto list.');
   });
 
   test('fetchPokemonDetails maps the response shape', async () => {
-    global.fetch.mockResolvedValue({
+    globalThis.fetch.mockResolvedValue({
       ok: true,
       json: async () => ({
         id: 25,
@@ -39,7 +39,7 @@ describe('pokemonApi', () => {
 
   test('fetchPokemonDetails throws when request fails', async () => {
     const url = 'https://pokeapi.co/api/v2/pokemon/999/';
-    global.fetch.mockResolvedValue({ ok: false });
+    globalThis.fetch.mockResolvedValue({ ok: false });
 
     await expect(fetchPokemonDetails(url)).rejects.toThrow(`Failed to fetch details from ${url}`);
   });

@@ -2,7 +2,19 @@ module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test/setupTests.js'],
   transform: {
-    '^.+\\.(js|jsx)$': ['@swc/jest'],
+    '^.+\\.(js|jsx)$': ['@swc/jest', {
+      jsc: {
+        parser: {
+          syntax: 'ecmascript',
+          jsx: true,
+        },
+        transform: {
+          react: {
+            runtime: 'automatic',
+          },
+        },
+      },
+    }],
   },
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',

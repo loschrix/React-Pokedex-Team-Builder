@@ -13,7 +13,7 @@ describe('useInfiniteScroll', () => {
       <HookHarness onLoadMore={onLoadMore} hasMore isLoading={false} />
     );
 
-    const observer = global.IntersectionObserver.instances[0];
+    const observer = globalThis.IntersectionObserver.instances[0];
 
     expect(observer.observe).toHaveBeenCalledWith(getByTestId('loader'));
 
@@ -28,7 +28,7 @@ describe('useInfiniteScroll', () => {
       <HookHarness onLoadMore={onLoadMore} hasMore isLoading />
     );
 
-    const observer = global.IntersectionObserver.instances[0];
+    const observer = globalThis.IntersectionObserver.instances[0];
     observer.trigger([{ isIntersecting: true }]);
 
     rerender(<HookHarness onLoadMore={onLoadMore} hasMore={false} isLoading={false} />);
@@ -43,7 +43,7 @@ describe('useInfiniteScroll', () => {
       <HookHarness onLoadMore={onLoadMore} hasMore isLoading={false} />
     );
 
-    const observer = global.IntersectionObserver.instances[0];
+    const observer = globalThis.IntersectionObserver.instances[0];
     unmount();
 
     expect(observer.disconnect).toHaveBeenCalledTimes(1);

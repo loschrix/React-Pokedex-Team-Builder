@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act, within } from '@testing-library/react';
 import App from '../App.jsx';
 import { fetchKantoList, fetchPokemonDetails } from '../services/pokemonApi.js';
 
@@ -94,10 +94,11 @@ describe('App integration', () => {
     }
 
     expect(screen.getByText('6/6')).toBeInTheDocument();
-    expect(screen.getByLabelText('Already in team')).toBeDisabled();
+    expect(screen.getAllByLabelText('Already in team')).toHaveLength(6);
     expect(screen.getByLabelText('Team full')).toBeDisabled();
 
-    const member = screen.getByText('Poke1').closest('button');
+    const sidebar = screen.getByRole('complementary');
+    const member = within(sidebar).getByText('Poke1').closest('button');
     fireEvent.click(member);
 
     expect(await screen.findByText('5/6')).toBeInTheDocument();

@@ -1,4 +1,4 @@
-import "../src/index.css";
+import "../index.css";
 import "../src/app.css";
 
 /** @type { import('@storybook/react-vite').Preview } */

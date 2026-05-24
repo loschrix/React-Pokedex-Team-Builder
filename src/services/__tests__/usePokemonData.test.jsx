@@ -105,7 +105,8 @@ describe('usePokemonData', () => {
 
     const { result } = renderHook(() => usePokemonData(''));
 
-    await waitFor(() => expect(result.current.hasMore).toBe(false));
+    await waitFor(() => expect(result.current.pokemons).toHaveLength(1));
+    expect(result.current.hasMore).toBe(false);
 
     act(() => {
       result.current.loadMore();

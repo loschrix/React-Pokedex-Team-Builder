@@ -28,7 +28,7 @@ describe('useDebounce', () => {
 
   test('cleans pending timeout when value changes', () => {
     jest.useFakeTimers();
-    const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
+    const clearTimeoutSpy = jest.spyOn(globalThis, 'clearTimeout');
 
     const { rerender } = renderHook(
       ({ value, delay }) => useDebounce(value, delay),

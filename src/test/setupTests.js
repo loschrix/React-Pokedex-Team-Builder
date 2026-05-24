@@ -16,14 +16,14 @@ class MockIntersectionObserver {
   }
 }
 
-global.IntersectionObserver = MockIntersectionObserver;
+globalThis.IntersectionObserver = MockIntersectionObserver;
 
-global.fetch = jest.fn();
+globalThis.fetch = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
   jest.useRealTimers();
   localStorage.clear();
-  global.fetch = jest.fn();
+  globalThis.fetch = jest.fn();
   MockIntersectionObserver.instances = [];
 });

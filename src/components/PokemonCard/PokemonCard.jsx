@@ -1,6 +1,6 @@
 import "./PokemonCard.css";
 
-export function PokemonCard({ pokemon, isSelected, isTeamFull, onToggleTeam }) {
+export function PokemonCard({ pokemon, isSelected, isTeamFull, onAddToTeam }) {
     const formattedId = `#${pokemon.id.toString().padStart(3, "0")}`;
     const capitalizedName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     const primaryType = pokemon.types[0] ?? "unknown";
@@ -31,10 +31,11 @@ export function PokemonCard({ pokemon, isSelected, isTeamFull, onToggleTeam }) {
             <button
                 type="button"
                 className="pokemon-add-button"
-                onClick={() => onToggleTeam(pokemon)}
-                disabled={isTeamFull && !isSelected}
+                onClick={() => onAddToTeam(pokemon)}
+                disabled={isTeamFull || isSelected}
+                aria-label={isSelected ? "Already in team" : isTeamFull ? "Team full" : "Add to team"}
             >
-                {isSelected ? "Remove from team" : isTeamFull ? "Team full" : "Add to team"}
+                +
             </button>
         </article>
     );

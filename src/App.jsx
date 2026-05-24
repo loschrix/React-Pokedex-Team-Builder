@@ -32,29 +32,14 @@ function App() {
 
     const teamIds = useMemo(() => new Set(team.map(({ id }) => id)), [team]);
 
-    const featuredTypes = useMemo(() => {
-        const typeCounts = filteredPokemons.reduce((counts, { types }) => {
-            types.forEach(type => {
-                counts[type] = (counts[type] ?? 0) + 1;
-            });
-            return counts;
-        }, {});
-
-        return Object.entries(typeCounts)
-            .sort(([, countA], [, countB]) => countB - countA)
-            .slice(0, 3);
-    }, [filteredPokemons]);
-
     const handleSearchChange = useCallback((value) => {
         setSearchValue(value);
     }, []);
 
-    const handleToggleTeam = useCallback((pokemon) => {
+    const handleAddToTeam = useCallback((pokemon) => {
         setTeam(currentTeam => {
-            const alreadySelected = currentTeam.some(({ id }) => id === pokemon.id);
-
-            if (alreadySelected) {
-                return currentTeam.filter(({ id }) => id !== pokemon.id);
+            if (currentTeam.some(({ id }) => id === pokemon.id)) {
+                return currentTeam;
             }
 
             if (currentTeam.length >= 6) {
@@ -65,6 +50,10 @@ function App() {
         });
     }, []);
 
+    const handleRemoveFromTeam = useCallback((pokemonId) => {
+        setTeam(currentTeam => currentTeam.filter(({ id }) => id !== pokemonId));
+    }, []);
+
     return (
         <div className="app-shell">
             <Navbar />
@@ -73,26 +62,7 @@ function App() {
                 <section className="pokedex-column">
                     <div className="column-header">
                         <div>
-                            <p className="eyebrow">Kanto Pokédex</p>
-                            <h2>Find the perfect squad for your next battle.</h2>
-                            <p className="column-copy">
-                                Browse the first 151 Pokémon, search by name or type, and lock in up to six picks for your dream roster.
-                            </p>
-                        </div>
-
-                        <div className="header-stats" aria-label="Pokedex overview">
-                            <div className="stat-card">
-                                <span className="stat-label">Loaded</span>
-                                <strong>{pokemons.length}</strong>
-                            </div>
-                            <div className="stat-card">
-                                <span className="stat-label">Matches</span>
-                                <strong>{filteredPokemons.length}</strong>
-                            </div>
-                            <div className="stat-card stat-card--accent">
-                                <span className="stat-label">Team</span>
-                                <strong>{team.length}/6</strong>
-                            </div>
+                            <p className="eyebrow">KANTO POKEDEX</p>
                         </div>
                     </div>
 
@@ -101,19 +71,6 @@ function App() {
                     {error && <p className="status-banner status-banner--error">Błąd ładowania: {error}</p>}
 
                     <div className="scrollable-content">
-                        {featuredTypes.length > 0 && (
-                            <div className="type-overview">
-                                <span className="type-overview__label">Popular types</span>
-                                <div className="type-overview__chips">
-                                    {featuredTypes.map(([type, count]) => (
-                                        <span key={type} className={`type-overview__chip type-${type}`}>
-                                            {type} · {count}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
                         <div className="pokedex-grid">
                             {filteredPokemons.map(pokemon => (
                                 <PokemonCard
@@ -121,7 +78,7 @@ function App() {
                                     pokemon={pokemon}
                                     isSelected={teamIds.has(pokemon.id)}
                                     isTeamFull={team.length >= 6}
-                                    onToggleTeam={handleToggleTeam}
+                                    onAddToTeam={handleAddToTeam}
                                 />
                             ))}
                         </div>
@@ -142,22 +99,11 @@ function App() {
 
                 <aside className="team-column">
                     <div className="team-column__header">
-                        <p className="eyebrow">Trainer Console</p>
-                        <h2>Your battle-ready team</h2>
-                        <p>
-                            Pick up to six Pokémon. Mix types to keep your lineup versatile against every gym challenge.
-                        </p>
+                        <h2>MY TEAM</h2>
                     </div>
 
                     <div className="team-summary">
-                        <div>
-                            <span className="team-summary__label">Slots used</span>
-                            <strong>{team.length}/6</strong>
-                        </div>
-                        <div>
-                            <span className="team-summary__label">Search</span>
-                            <strong>{searchValue ? `“${searchValue}”` : "All"}</strong>
-                        </div>
+                        <strong>{team.length}/6</strong>
                     </div>
 
                     <div className="team-list">
@@ -177,7 +123,7 @@ function App() {
                                     key={pokemon.id}
                                     type="button"
                                     className={`team-slot team-slot--filled type-outline-${pokemon.types[0] ?? "unknown"}`}
-                                    onClick={() => handleToggleTeam(pokemon)}
+                                    onClick={() => handleRemoveFromTeam(pokemon.id)}
                                 >
                                     <span className="team-slot__index">0{index + 1}</span>
                                     <img src={pokemon.image} alt={pokemon.name} className="team-slot__image" />

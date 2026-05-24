@@ -26,19 +26,6 @@
     box-shadow: 0 0 0 6px rgb(255 255 255 / 42%);
 }
 
-.title {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 900;
-    color: #ffcb05;
-    text-shadow:
-        -2px -2px 0 #1d46b9,
-        2px -2px 0 #1d46b9,
-        -2px 2px 0 #1d46b9,
-        2px 2px 0 #1d46b9;
-    letter-spacing: 0.02em;
-}
-
 @media (max-width: 720px) {
     .navbar {
         padding: 1rem;
@@ -46,9 +33,5 @@
 
     .navbar::after {
         display: none;
-    }
-
-    .title {
-        font-size: 1.7rem;
     }
 }

@@ -1,0 +1,42 @@
+.team-column {
+    background-color: #f2f6fc;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.team-column__header {
+    background-color: #ff5252;
+    color: white;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.team-column__header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.team-column__counter {
+    font-weight: 700;
+    font-size: 1.1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+.team-list {
+    padding: 8px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    flex-grow: 1;
+}

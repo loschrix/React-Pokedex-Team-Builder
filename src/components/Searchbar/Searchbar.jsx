@@ -3,8 +3,7 @@ import styles from "./Searchbar.module.css";
 function Searchbar({ value, onChange }) {
     return (
         <div className={styles.searchContainer}>
-            <label className={styles.searchLabel} htmlFor="pokemon-search">
-                Search by name, number or type
+            <label htmlFor="pokemon-search">
             </label>
 
             <div className={styles.searchField}>

@@ -2,11 +2,17 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import Searchbar from "./components/Searchbar/Searchbar.jsx";
 import { usePokemonData } from "./services/usePokemonData.js";
 import { PokemonCard } from "./components/PokemonCard/PokemonCard.jsx";
+import { useInfiniteScroll } from "./services/useInfiniteScroll.js";
 import "./app.css";
 
 function App() {
-    // Pobieramy dane z naszego hooka
     const { pokemons, isLoading, error, loadMore, hasMore } = usePokemonData();
+
+    const loaderRef = useInfiniteScroll({
+        onLoadMore: loadMore,
+        hasMore: hasMore,
+        isLoading: isLoading
+    });
 
     return (
         <div className="app-shell">
@@ -19,21 +25,21 @@ function App() {
 
                     {error && <p>Błąd: {error}</p>}
 
-                    {/* Wrzucamy wygenerowane karty do siatki */}
-                    <div className="pokedex-grid">
-                        {pokemons.map(pokemon => (
-                            <PokemonCard key={pokemon.id} pokemon={pokemon} />
-                        ))}
-                    </div>
+                    {/* NOWY KONTENER: Odpowiada za scrollowanie całości (siatka + loader) */}
+                    <div className="scrollable-content">
 
-                    {/* Sekcja ładowania pod siatką */}
-                    <div className="pagination">
-                        {isLoading && <p>Loading Pokedex...</p>}
-                        {!isLoading && hasMore && (
-                            <button className="load-more-btn" onClick={loadMore}>
-                                Załaduj więcej
-                            </button>
-                        )}
+                        {/* Wrzucamy wygenerowane karty do siatki */}
+                        <div className="pokedex-grid">
+                            {pokemons.map(pokemon => (
+                                <PokemonCard key={pokemon.id} pokemon={pokemon} />
+                            ))}
+                        </div>
+
+                        {/* Sekcja ładowania na samym dole przewijanego obszaru */}
+                        <div className="pagination" ref={loaderRef} style={{ minHeight: '50px', textAlign: 'center', padding: '1rem 0' }}>
+                            {!hasMore && !isLoading && <p>You've catch all Pokemon!</p>}
+                        </div>
+
                     </div>
                 </section>
 

@@ -4,7 +4,10 @@ export function usePokemonData() {
     const [pokemons, setPokemons] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [count, setCount] = useState(0);
     const [nextUrl, setNextUrl] = useState('https://pokeapi.co/api/v2/pokemon?limit=20');
+
+    const MAX_POKEMON = 151; // number of pokémon in first generation
 
     // function memoization with useCallback
     const fetchPokemons = useCallback(async (url) => {
@@ -39,11 +42,18 @@ export function usePokemonData() {
             // Update Pokémon list
             setPokemons(prevPokemons => {
                 const combined = [...prevPokemons, ...pokemonsData];
-                return Array.from(new Map(combined.map(p => [p.id, p])).values());
+                const unique = Array.from(new Map(combined.map(p => [p.id, p])).values());
+
+                setCount(unique.length);
+                return unique.slice(0, MAX_POKEMON);
             });
 
             // Update next site's link
-            setNextUrl(data.next);
+            if (count + pokemonsData.length >= MAX_POKEMON) {
+                setNextUrl(null);
+            } else {
+                setNextUrl(data.next);
+            }
 
         } catch (err) {
             setError(err.message);
@@ -60,11 +70,11 @@ export function usePokemonData() {
     }, [fetchPokemons, pokemons.length]);
 
     // Allows for mounting next data
-    const loadMore = () => {
+    const loadMore = useCallback(() => {
         if (nextUrl && !isLoading) {
             void fetchPokemons(nextUrl);
         }
-    };
+    }, [nextUrl, isLoading, fetchPokemons]);
 
     return { pokemons, isLoading, error, loadMore, hasMore: !!nextUrl };
 }

@@ -1,16 +1,20 @@
-import styles from './Navbar.module.css';
+import styles from "./Navbar.module.css";
 import pokeball from "../../assets/pokeball.png";
 
 function Navbar() {
     return (
         <nav className={styles.navbar}>
             <div className={styles.top}>
-                <img className={styles.logo} src={String (pokeball)} alt='pokeball'/>
-                <h1 className={styles.title}>Pokédex</h1>
+                <img className={styles.logo} src={String(pokeball)} alt="Pokeball logo" />
+                <div className={styles.titleBlock}>
+                    <h1 className={styles.title}>Pokédex</h1>
+                    <p className={styles.subtitle}>Build your ultimate Kanto team</p>
+                </div>
             </div>
-            <p className={styles.subtitle}>Build your ultimate team</p>
+
+            <span className={styles.badge}>Trainer Mode</span>
         </nav>
-    )
+    );
 }
 
 export default Navbar;

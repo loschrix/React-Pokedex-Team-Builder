@@ -1,99 +1,208 @@
 .pokemon-card {
+    --card-accent: var(--color-accent);
+
     width: 100%;
-    max-width: none;
-    background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
-    border: 1px solid rgb(198 209 240 / 90%);
-    border-radius: 18px;
-    box-shadow: 0 12px 24px rgb(40 59 112 / 14%);
+    position: relative;
+    background:
+        radial-gradient(circle at top center, rgb(255 255 255 / 96%) 0 22%, transparent 23%),
+        linear-gradient(180deg, rgb(255 255 255 / 100%) 0%, color-mix(in srgb, var(--card-accent) 12%, white) 100%);
+    border: 1px solid color-mix(in srgb, var(--card-accent) 28%, white);
+    border-radius: 24px;
+    box-shadow: 0 18px 36px rgb(23 48 95 / 12%);
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    margin: 0;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
+.pokemon-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 8%, transparent), transparent 28%),
+        linear-gradient(180deg, transparent 66%, color-mix(in srgb, var(--card-accent) 10%, transparent));
+    pointer-events: none;
+}
+
 .pokemon-card:hover {
-    transform: translateY(-5px);
-    border-color: rgb(91 102 246 / 48%);
-    box-shadow: 0 16px 30px rgb(40 59 112 / 20%);
+    transform: translateY(-6px);
+    border-color: color-mix(in srgb, var(--card-accent) 48%, white);
+    box-shadow: 0 24px 44px rgb(23 48 95 / 18%);
+}
+
+.pokemon-card--selected {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-accent) 22%, white), 0 24px 44px rgb(23 48 95 / 20%);
+}
+
+.pokemon-card__header,
+.pokemon-name,
+.pokemon-types,
+.pokemon-add-button,
+.pokemon-image {
+    position: relative;
+    z-index: 1;
+}
+
+.pokemon-card__header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem 0;
 }
 
 .pokemon-id {
-    align-self: flex-start;
-    margin: 12px 0 0 12px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+}
+
+.pokemon-primary-type {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .pokemon-image {
-    width: 120px;
-    height: 120px;
+    width: 124px;
+    height: 124px;
     image-rendering: pixelated;
-    margin-top: -8px;
-    filter: drop-shadow(0 10px 10px rgb(49 64 120 / 14%));
+    margin-top: 0.1rem;
+    filter: drop-shadow(0 18px 16px rgb(23 48 95 / 14%));
 }
 
 .pokemon-name {
-    margin: 5px 0;
-    font-size: 1.3rem;
-    font-weight: 700;
+    margin: 0.2rem 0 0.35rem;
+    font-size: 1.32rem;
+    font-weight: 800;
     color: var(--color-text-primary);
-}
-
-.pokemon-add-button {
-    background: linear-gradient(90deg, var(--color-accent-strong), var(--color-accent));
-    color: white;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 1.8rem;
-    font-weight: normal;
-    cursor: pointer;
-    margin-top: auto;
-    transition: filter 0.2s ease;
-}
-
-.pokemon-add-button:hover {
-    filter: brightness(1.1);
 }
 
 .pokemon-types {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin: 0 10px 18px;
+    gap: 0.5rem;
+    margin: 0 0.9rem 1.1rem;
 }
 
 .type-badge {
     color: white;
-    padding: 5px 12px;
+    padding: 0.42rem 0.78rem;
     border-radius: 999px;
-    font-weight: 600;
-    font-size: 0.82rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.2px;
+    font-weight: 700;
+    font-size: 0.76rem;
+    text-shadow: 0 1px 2px rgb(0 0 0 / 24%);
+    letter-spacing: 0.02em;
 }
 
-.type-normal   { background-color: #A8A77A; }
-.type-fire     { background-color: #EE8130; }
-.type-water    { background-color: #6390F0; }
-.type-electric { background-color: #F7D02C; }
-.type-grass    { background-color: #7AC74C; }
-.type-ice      { background-color: #96D9D6; }
-.type-fighting { background-color: #C22E28; }
-.type-poison   { background-color: #A33EA1; }
-.type-ground   { background-color: #E2BF65; }
-.type-flying   { background-color: #A98FF3; }
-.type-psychic  { background-color: #F95587; }
-.type-bug      { background-color: #A6B91A; }
-.type-rock     { background-color: #B6A136; }
-.type-ghost    { background-color: #735797; }
-.type-dragon   { background-color: #6F35FC; }
-.type-dark     { background-color: #705746; }
-.type-steel    { background-color: #B7B7CE; }
-.type-fairy    { background-color: #D685AD; }
+.pokemon-add-button {
+    width: calc(100% - 1rem);
+    margin: 0 0.5rem 0.55rem;
+    border: 0;
+    border-radius: 16px;
+    padding: 0.82rem 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: white;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 88%, black), var(--card-accent));
+    cursor: pointer;
+    transition: transform 0.18s ease, filter 0.18s ease, opacity 0.18s ease;
+}
 
-.type-unknown  { background-color: #777777; }
+.pokemon-add-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.pokemon-add-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+}
+
+.type-theme-normal,
+.type-outline-normal { --card-accent: #a8a77a; }
+.type-theme-fire,
+.type-outline-fire { --card-accent: #ee8130; }
+.type-theme-water,
+.type-outline-water { --card-accent: #6390f0; }
+.type-theme-electric,
+.type-outline-electric { --card-accent: #f7d02c; }
+.type-theme-grass,
+.type-outline-grass { --card-accent: #7ac74c; }
+.type-theme-ice,
+.type-outline-ice { --card-accent: #96d9d6; }
+.type-theme-fighting,
+.type-outline-fighting { --card-accent: #c22e28; }
+.type-theme-poison,
+.type-outline-poison { --card-accent: #a33ea1; }
+.type-theme-ground,
+.type-outline-ground { --card-accent: #e2bf65; }
+.type-theme-flying,
+.type-outline-flying { --card-accent: #a98ff3; }
+.type-theme-psychic,
+.type-outline-psychic { --card-accent: #f95587; }
+.type-theme-bug,
+.type-outline-bug { --card-accent: #a6b91a; }
+.type-theme-rock,
+.type-outline-rock { --card-accent: #b6a136; }
+.type-theme-ghost,
+.type-outline-ghost { --card-accent: #735797; }
+.type-theme-dragon,
+.type-outline-dragon { --card-accent: #6f35fc; }
+.type-theme-dark,
+.type-outline-dark { --card-accent: #705746; }
+.type-theme-steel,
+.type-outline-steel { --card-accent: #b7b7ce; }
+.type-theme-fairy,
+.type-outline-fairy { --card-accent: #d685ad; }
+.type-theme-unknown,
+.type-outline-unknown { --card-accent: #7a7a7a; }
+
+.type-outline-normal,
+.type-outline-fire,
+.type-outline-water,
+.type-outline-electric,
+.type-outline-grass,
+.type-outline-ice,
+.type-outline-fighting,
+.type-outline-poison,
+.type-outline-ground,
+.type-outline-flying,
+.type-outline-psychic,
+.type-outline-bug,
+.type-outline-rock,
+.type-outline-ghost,
+.type-outline-dragon,
+.type-outline-dark,
+.type-outline-steel,
+.type-outline-fairy,
+.type-outline-unknown {
+    border-color: color-mix(in srgb, var(--card-accent) 45%, white);
+}
+
+.type-normal { background-color: #a8a77a; }
+.type-fire { background-color: #ee8130; }
+.type-water { background-color: #6390f0; }
+.type-electric { background-color: #f7d02c; color: #3f2d00; text-shadow: none; }
+.type-grass { background-color: #7ac74c; }
+.type-ice { background-color: #96d9d6; color: #12404d; text-shadow: none; }
+.type-fighting { background-color: #c22e28; }
+.type-poison { background-color: #a33ea1; }
+.type-ground { background-color: #e2bf65; color: #513b00; text-shadow: none; }
+.type-flying { background-color: #a98ff3; }
+.type-psychic { background-color: #f95587; }
+.type-bug { background-color: #a6b91a; }
+.type-rock { background-color: #b6a136; }
+.type-ghost { background-color: #735797; }
+.type-dragon { background-color: #6f35fc; }
+.type-dark { background-color: #705746; }
+.type-steel { background-color: #b7b7ce; color: #233157; text-shadow: none; }
+.type-fairy { background-color: #d685ad; }
+.type-unknown { background-color: #777777; }

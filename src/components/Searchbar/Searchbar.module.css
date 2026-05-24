@@ -1,32 +1,79 @@
 .searchContainer {
     width: 100%;
-    margin: 1.2rem 0 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.searchLabel {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+.searchField {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.3rem 0.35rem 0.3rem 0.9rem;
+    background: linear-gradient(180deg, rgb(255 255 255 / 98%) 0%, rgb(248 250 255 / 96%) 100%);
+    border: 1px solid rgb(23 48 95 / 12%);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 18px 36px rgb(23 48 95 / 8%);
+}
+
+.searchField:focus-within {
+    border-color: rgb(47 105 255 / 35%);
+    box-shadow: 0 0 0 4px rgb(47 105 255 / 10%), 0 18px 36px rgb(23 48 95 / 12%);
+}
+
+.searchIcon {
+    font-size: 1.15rem;
+    color: var(--color-danger);
 }
 
 .searchInput {
     width: 100%;
-    padding: 15px 20px;
-
-    font-family: inherit;
-    font-size: 1.03rem;
+    padding: 0.9rem 0;
+    border: 0;
+    background: transparent;
     color: var(--color-text-primary);
-
-    background: linear-gradient(180deg, #ffffff 0%, #f9faff 100%);
-    border: 1px solid rgb(187 198 232 / 80%);
-    border-radius: var(--radius-md);
-    box-shadow: 0 8px 20px rgb(56 82 150 / 8%);
-
     outline: none;
-
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .searchInput::placeholder {
-    color: var(--color-text-secondary);
+    color: rgb(94 111 147 / 80%);
 }
 
-.searchInput:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px rgb(91 102 246 / 14%), 0 10px 24px rgb(56 82 150 / 14%);
+.clearButton {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-danger), var(--color-danger-strong));
+    cursor: pointer;
+    transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.clearButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.clearButton:not(:disabled):hover {
     transform: translateY(-1px);
+    filter: brightness(1.06);
+}
+
+@media (max-width: 640px) {
+    .searchField {
+        grid-template-columns: 1fr;
+        padding: 0.8rem;
+    }
+
+    .searchInput {
+        padding: 0;
+    }
 }

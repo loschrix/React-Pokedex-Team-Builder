@@ -34,11 +34,11 @@ function App() {
             if (currentTeam.length >= 6) return currentTeam;
             return [...currentTeam, pokemon];
         });
-    }, []);
+    }, [setTeam]);
 
     const handleRemoveFromTeam = useCallback((pokemonId) => {
         setTeam(currentTeam => currentTeam.filter(({ id }) => id !== pokemonId));
-    }, []);
+    }, [setTeam]);
 
     const hasActiveSearch = useMemo(
         () => debouncedSearchValue.trim().length > 0,

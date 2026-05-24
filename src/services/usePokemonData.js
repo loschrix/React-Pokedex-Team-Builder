@@ -1,22 +1,40 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
-import { fetchKantoList, fetchPokemonDetails } from "./pokemonApi.js"; // Importujemy serwis
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
+import { fetchKantoList, fetchPokemonDetails } from "./pokemonApi.js";
 
 const PAGE_SIZE = 20;
 
+function paginationReducer(state, action) {
+    switch (action.type) {
+        case "reset":
+            return { page: 0, pokemons: [] };
+        case "appendPage": {
+            const combined = action.page === 0
+                ? action.payload
+                : [...state.pokemons, ...action.payload];
+
+            return {
+                page: state.page,
+                pokemons: Array.from(new Map(combined.map(pokemon => [pokemon.id, pokemon])).values())
+            };
+        }
+        case "nextPage":
+            return { ...state, page: state.page + 1 };
+        default:
+            return state;
+    }
+}
+
 export function usePokemonData(searchQuery = "") {
     const [basePokemons, setBasePokemons] = useState([]);
-    const [pokemons, setPokemons] = useState([]);
+    const [{ page, pokemons }, dispatch] = useReducer(paginationReducer, { page: 0, pokemons: [] });
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [page, setPage] = useState(0);
 
-    // ETAP 1: Pobranie zarysu listy
     useEffect(() => {
         let isMounted = true;
 
         async function loadInitialData() {
             try {
-                // Wywołujemy czystą funkcję z serwisu
                 const results = await fetchKantoList();
                 if (isMounted) setBasePokemons(results);
             } catch (err) {
@@ -29,7 +47,6 @@ export function usePokemonData(searchQuery = "") {
         return () => { isMounted = false; };
     }, []);
 
-    // ETAP 2: Filtrowanie
     const filteredBasePokemons = useMemo(() => {
         if (!searchQuery) return basePokemons;
 
@@ -43,13 +60,10 @@ export function usePokemonData(searchQuery = "") {
         });
     }, [basePokemons, searchQuery]);
 
-    // ETAP 3: Reset paginacji przy nowym wyszukiwaniu
     useEffect(() => {
-        setPage(0);
-        setPokemons([]);
+        dispatch({ type: "reset" });
     }, [filteredBasePokemons]);
 
-    // ETAP 4: Paginacja i pobieranie szczegółów (Hydracja)
     useEffect(() => {
         if (filteredBasePokemons.length === 0) return;
 
@@ -69,14 +83,10 @@ export function usePokemonData(searchQuery = "") {
                     return;
                 }
 
-                // Ponownie korzystamy z czystej funkcji serwisu
                 const details = await Promise.all(sliceToLoad.map(p => fetchPokemonDetails(p.url)));
 
                 if (isMounted) {
-                    setPokemons(prev => {
-                        const combined = page === 0 ? details : [...prev, ...details];
-                        return Array.from(new Map(combined.map(p => [p.id, p])).values());
-                    });
+                    dispatch({ type: "appendPage", page, payload: details });
                 }
             } catch (err) {
                 if (isMounted) setError(err.message);
@@ -90,10 +100,9 @@ export function usePokemonData(searchQuery = "") {
         return () => { isMounted = false; };
     }, [page, filteredBasePokemons]);
 
-    // ETAP 5: Ładowanie kolejnej strony
     const loadMore = useCallback(() => {
         if (!isLoading && pokemons.length < filteredBasePokemons.length) {
-            setPage(prevPage => prevPage + 1);
+            dispatch({ type: "nextPage" });
         }
     }, [isLoading, pokemons.length, filteredBasePokemons.length]);
 

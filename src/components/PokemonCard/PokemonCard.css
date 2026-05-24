@@ -1,0 +1,91 @@
+.pokemon-card {
+    width: 200px;
+    background-color: #e9f4fa;
+    border: 2px solid #1b355a;
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 0 #da413d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    margin: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-4px);
+}
+
+.pokemon-id {
+    align-self: flex-start;
+    margin: 12px 0 0 12px;
+    font-weight: 700;
+    color: #1b355a;
+    font-size: 1rem;
+}
+
+.pokemon-image {
+    width: 120px;
+    height: 120px;
+    image-rendering: pixelated;
+    margin-top: -10px;
+}
+
+.pokemon-name {
+    margin: 5px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.pokemon-add-button {
+    background-color: #1b355a;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 2rem;
+    font-weight: normal;
+    cursor: pointer;
+    margin-top: auto;
+}
+
+.pokemon-add-button:hover {
+    background-color: #274b7d;
+}
+
+.pokemon-types {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.type-badge {
+    color: white;
+    padding: 4px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.type-normal   { background-color: #A8A77A; }
+.type-fire     { background-color: #EE8130; }
+.type-water    { background-color: #6390F0; }
+.type-electric { background-color: #F7D02C; }
+.type-grass    { background-color: #7AC74C; }
+.type-ice      { background-color: #96D9D6; }
+.type-fighting { background-color: #C22E28; }
+.type-poison   { background-color: #A33EA1; }
+.type-ground   { background-color: #E2BF65; }
+.type-flying   { background-color: #A98FF3; }
+.type-psychic  { background-color: #F95587; }
+.type-bug      { background-color: #A6B91A; }
+.type-rock     { background-color: #B6A136; }
+.type-ghost    { background-color: #735797; }
+.type-dragon   { background-color: #6F35FC; }
+.type-dark     { background-color: #705746; }
+.type-steel    { background-color: #B7B7CE; }
+.type-fairy    { background-color: #D685AD; }
+
+.type-unknown  { background-color: #777777; }

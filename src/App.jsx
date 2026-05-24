@@ -9,7 +9,7 @@ function App() {
     const { pokemons, isLoading, error, loadMore, hasMore } = usePokemonData();
 
     return (
-        <>
+        <div className="app-shell">
             <Navbar />
             <main className="main-layout">
 
@@ -43,7 +43,7 @@ function App() {
                 </aside>
 
             </main>
-        </>
+        </div>
     )
 }
 

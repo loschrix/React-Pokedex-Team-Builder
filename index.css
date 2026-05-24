@@ -22,6 +22,12 @@
     --shadow-sm: 0 10px 30px rgb(48 70 140 / 10%);
 }
 
+html,
+body,
+#root {
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -29,6 +35,7 @@ body {
     font-family: "Elms Sans", "Inter", "Segoe UI", sans-serif;
     font-weight: 400;
     color: var(--color-text-primary);
+    overflow: hidden;
     background:
         radial-gradient(circle at 10% -10%, rgb(91 102 246 / 20%), transparent 30%),
         radial-gradient(circle at 90% 10%, rgb(255 94 138 / 12%), transparent 30%),

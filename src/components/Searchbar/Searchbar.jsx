@@ -3,9 +3,6 @@ import styles from "./Searchbar.module.css";
 function Searchbar({ value, onChange }) {
     return (
         <div className={styles.searchContainer}>
-            <label htmlFor="pokemon-search">
-            </label>
-
             <div className={styles.searchField}>
                 <span className={styles.searchIcon} aria-hidden="true">⌕</span>
                 <input

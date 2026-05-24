@@ -52,9 +52,7 @@ function App() {
             <main className="main-layout">
                 <section className="pokedex-column">
                     <div className="column-header">
-                        <div>
-                            <p className="eyebrow">Kanto Pokédex</p>
-                        </div>
+                        <p className="eyebrow">Kanto Pokédex</p>
                     </div>
 
                     <Searchbar value={searchValue} onChange={handleSearchChange} />

@@ -54,13 +54,11 @@
     color: var(--color-danger);
 }
 
-.column-header h2,
 .team-column h2 {
     font-size: clamp(1.4rem, 1.2rem + 0.7vw, 2rem);
     line-height: 1.05;
 }
 
-.team-column__header p,
 .empty-state p,
 .team-slot p,
 .status-banner {
@@ -172,10 +170,6 @@
 
 .team-column__header h2 {
     margin: 0;
-}
-
-.team-column__header .eyebrow {
-    color: rgb(255 236 145 / 94%);
 }
 
 .team-column__counter {

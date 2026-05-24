@@ -12,7 +12,7 @@ function Searchbar({ value, onChange }) {
                     id="pokemon-search"
                     type="text"
                     className={styles.searchInput}
-                    placeholder="Try Pikachu, fire, 025..."
+                    placeholder="Try Pikachu, 025..."
                     value={value}
                     onChange={(event) => onChange(event.target.value)}
                 />

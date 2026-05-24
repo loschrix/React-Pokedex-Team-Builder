@@ -50,24 +50,31 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 | `npm run build` | Build for production (output in `dist/`) |
 | `npm run preview` | Preview the production build locally |
 | `npm run lint` | Run ESLint across the whole project |
+| `npm run test` | Run Jest test suite once |
+| `npm run test:watch` | Run Jest in watch mode |
+| `npm run test:coverage` | Run Jest with coverage and thresholds |
+| `npm run storybook` | Start Storybook for component development |
+| `npm run build-storybook` | Build static Storybook output |
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Navbar/          # Top navigation bar
-│   ├── Searchbar/       # Debounced search input
-│   ├── PokemonCard/     # Individual Pokémon card with type theming
-│   ├── TeamMember/      # Compact team slot in the sidebar
-│   ├── TeamSidebar/     # Right-hand team panel (max 6 members)
-│   └── PokedexStatus/   # Loading / end-of-list indicator
-└── services/
-    ├── pokemonApi.js       # PokeAPI fetch helpers
-    ├── usePokemonData.js   # Pagination + search state management
-    ├── useTeamStorage.js   # localStorage persistence for the team
-    ├── useInfiniteScroll.js# IntersectionObserver-based infinite scroll
-    └── useDebounce.js      # Generic debounce hook
+│   ├── Navbar/             # Top navigation bar + tests
+│   ├── Searchbar/          # Debounced search input + tests/stories
+│   ├── PokemonCard/        # Card UI + tests/stories
+│   ├── TeamMember/         # Team slot UI + tests
+│   ├── TeamSidebar/        # Team panel + tests/stories
+│   └── PokedexStatus/      # End-state indicator + tests/stories
+├── services/
+│   ├── pokemonApi.js       # PokeAPI fetch helpers + tests
+│   ├── usePokemonData.js   # Pagination + search state + tests
+│   ├── useTeamStorage.js   # localStorage persistence + tests
+│   ├── useInfiniteScroll.js# Observer-based loading + tests
+│   └── useDebounce.js      # Debounce hook + tests
+├── test/                   # Shared Jest test setup and mocks
+└── __tests__/App.test.jsx  # App integration tests
 ```
 
 ## How It Works
@@ -82,7 +89,7 @@ src/
 Contributions are welcome! Please:
 
 1. Fork the repository and create a feature branch.
-2. Run `npm run lint` and `npm run build` before opening a pull request to make sure there are no errors.
+2. Run `npm run lint`, `npm run test:coverage`, and `npm run build` before opening a pull request.
 3. Keep pull requests focused — one feature or fix per PR.
 
 ## Getting Help

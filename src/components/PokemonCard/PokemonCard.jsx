@@ -9,7 +9,6 @@ export function PokemonCard({ pokemon, isSelected, isTeamFull, onAddToTeam }) {
         <article className={`pokemon-card type-theme-${primaryType} ${isSelected ? "pokemon-card--selected" : ""}`}>
             <div className="pokemon-card__header">
                 <div className="pokemon-id">{formattedId}</div>
-                <span className={`pokemon-primary-type type-${primaryType}`}>{primaryType}</span>
             </div>
 
             <img

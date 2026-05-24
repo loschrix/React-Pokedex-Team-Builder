@@ -4,7 +4,7 @@ export default function TeamSidebar({ team, onRemoveFromTeam }) {
     return (
         <aside className="team-column">
             <div className="team-column__header">
-                <h2>MY TEAM</h2>
+                <h2>My Team</h2>
                 <span className="team-column__counter">
                     {team.length}/6
                 </span>

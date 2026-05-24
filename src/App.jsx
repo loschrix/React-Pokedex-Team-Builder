@@ -53,7 +53,7 @@ function App() {
                 <section className="pokedex-column">
                     <div className="column-header">
                         <div>
-                            <p className="eyebrow">KANTO POKEDEX</p>
+                            <p className="eyebrow">Kanto Pokédex</p>
                         </div>
                     </div>
 

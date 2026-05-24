@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor, act, within } from '@testing-library/react';
-import App from '../App.jsx';
-import { fetchKantoList, fetchPokemonDetails } from '../services/pokemonApi.js';
+import App from './App.jsx';
+import { fetchKantoList, fetchPokemonDetails } from './services/pokemonApi.js';
 
-jest.mock('../services/pokemonApi.js', () => ({
+jest.mock('./services/pokemonApi.js', () => ({
   fetchKantoList: jest.fn(),
   fetchPokemonDetails: jest.fn(),
 }));

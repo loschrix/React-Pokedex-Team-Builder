@@ -1,29 +1,20 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import Searchbar from "./components/Searchbar/Searchbar.jsx";
 import { PokemonCard } from "./components/PokemonCard/PokemonCard.jsx";
 import TeamSidebar from "./components/TeamSidebar/TeamSidebar.jsx";
+import { PokedexStatus } from "./components/PokedexStatus/PokedexStatus.jsx";
 import { useInfiniteScroll } from "./services/useInfiniteScroll.js";
 import { usePokemonData } from "./services/usePokemonData.js";
 import { useDebounce } from "./services/useDebounce.js";
+import { useTeamStorage } from "./services/useTeamStorage.js";
 import "./app.css";
 
 function App() {
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearchValue = useDebounce(searchValue, 500);
-
     const { pokemons, isLoading, error, loadMore, hasMore } = usePokemonData(debouncedSearchValue);
-
-    // 1. Pobieramy zapisaną drużynę z localStorage przy pierwszym uruchomieniu
-    const [team, setTeam] = useState(() => {
-        const savedTeam = localStorage.getItem("pokemonTeam");
-        return savedTeam ? JSON.parse(savedTeam) : [];
-    });
-
-    // 2. Aktualizujemy localStorage za każdym razem, gdy zmieni się skład drużyny
-    useEffect(() => {
-        localStorage.setItem("pokemonTeam", JSON.stringify(team));
-    }, [team]);
+    const [team, setTeam] = useTeamStorage();
 
     const loaderRef = useInfiniteScroll({
         onLoadMore: loadMore,
@@ -49,6 +40,11 @@ function App() {
         setTeam(currentTeam => currentTeam.filter(({ id }) => id !== pokemonId));
     }, []);
 
+    const hasActiveSearch = useMemo(
+        () => debouncedSearchValue.trim().length > 0,
+        [debouncedSearchValue]
+    );
+
     return (
         <div className="app-shell">
             <Navbar />
@@ -65,7 +61,7 @@ function App() {
 
                     {error && <p className="status-banner status-banner--error">Error when loading: {error}</p>}
 
-                    <div className="scrollable-content">
+                    <div className="scrollable-content custom-scrollbar">
                         <div className="pokedex-grid">
                             {pokemons.map(pokemon => (
                                 <PokemonCard
@@ -85,9 +81,13 @@ function App() {
                             </div>
                         )}
 
-                        <div className="pagination" ref={loaderRef}>
-                            {!hasMore && !isLoading && <p className="status-banner">You&apos;ve discovered all 151 Kanto Pokémon.</p>}
-                        </div>
+                        <div className="pagination" ref={loaderRef} />
+                        <PokedexStatus
+                            isLoading={isLoading}
+                            hasMore={hasMore}
+                            hasActiveSearch={hasActiveSearch}
+                            hasResults={pokemons.length > 0}
+                        />
                     </div>
                 </section>
 

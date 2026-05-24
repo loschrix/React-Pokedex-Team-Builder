@@ -1,6 +1,5 @@
 const ALL_KANTO_URL = "https://pokeapi.co/api/v2/pokemon?limit=151";
 
-// Pobiera "lekką" listę wszystkich Pokemonów
 export async function fetchKantoList() {
     const response = await fetch(ALL_KANTO_URL);
     if (!response.ok) {
@@ -10,7 +9,6 @@ export async function fetchKantoList() {
     return data.results;
 }
 
-// Pobiera i formatuje szczegóły konkretnego Pokemona
 export async function fetchPokemonDetails(pokemonUrl) {
     const response = await fetch(pokemonUrl);
     if (!response.ok) {

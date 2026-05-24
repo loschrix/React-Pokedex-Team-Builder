@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useMemo } from "react";
-import { fetchKantoList, fetchPokemonDetails } from "./pokemonApi.js"; // Importujemy serwis
+import { fetchKantoList, fetchPokemonDetails } from "./pokemonApi.js";
 
 const PAGE_SIZE = 20;
 
@@ -10,13 +10,11 @@ export function usePokemonData(searchQuery = "") {
     const [error, setError] = useState(null);
     const [page, setPage] = useState(0);
 
-    // ETAP 1: Pobranie zarysu listy
     useEffect(() => {
         let isMounted = true;
 
         async function loadInitialData() {
             try {
-                // Wywołujemy czystą funkcję z serwisu
                 const results = await fetchKantoList();
                 if (isMounted) setBasePokemons(results);
             } catch (err) {
@@ -29,7 +27,6 @@ export function usePokemonData(searchQuery = "") {
         return () => { isMounted = false; };
     }, []);
 
-    // ETAP 2: Filtrowanie
     const filteredBasePokemons = useMemo(() => {
         if (!searchQuery) return basePokemons;
 
@@ -43,13 +40,11 @@ export function usePokemonData(searchQuery = "") {
         });
     }, [basePokemons, searchQuery]);
 
-    // ETAP 3: Reset paginacji przy nowym wyszukiwaniu
     useEffect(() => {
         setPage(0);
         setPokemons([]);
     }, [filteredBasePokemons]);
 
-    // ETAP 4: Paginacja i pobieranie szczegółów (Hydracja)
     useEffect(() => {
         if (filteredBasePokemons.length === 0) return;
 
@@ -69,7 +64,6 @@ export function usePokemonData(searchQuery = "") {
                     return;
                 }
 
-                // Ponownie korzystamy z czystej funkcji serwisu
                 const details = await Promise.all(sliceToLoad.map(p => fetchPokemonDetails(p.url)));
 
                 if (isMounted) {
@@ -90,7 +84,6 @@ export function usePokemonData(searchQuery = "") {
         return () => { isMounted = false; };
     }, [page, filteredBasePokemons]);
 
-    // ETAP 5: Ładowanie kolejnej strony
     const loadMore = useCallback(() => {
         if (!isLoading && pokemons.length < filteredBasePokemons.length) {
             setPage(prevPage => prevPage + 1);

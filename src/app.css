@@ -31,7 +31,7 @@
 }
 
 .team-column::before {
-    content: "Twoja Drużyna (6/6)";
+    content: "Your team (0/6)";
     display: block;
     font-size: 1.1rem;
     font-weight: 700;
@@ -43,8 +43,9 @@
 
 .pokedex-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    align-items: start;
+    gap: 1.5rem;
     height: calc(100vh - 250px);
     overflow-y: auto;
     overflow-x: hidden;

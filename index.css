@@ -5,27 +5,32 @@
 }
 
 :root {
-    --color-bg: #f3f6fb;
+    --color-bg: #f4f7ff;
     --color-surface: #ffffff;
-    --color-surface-muted: #e9eff7;
-    --color-border: #b4bfd0;
-    --color-text-primary: #1e2430;
-    --color-text-secondary: #4e5b73;
-    --color-accent: #2d4f8f;
-    --color-scroll-thumb: #a9b7cc;
-    --color-scroll-thumb-hover: #8899b2;
+    --color-surface-muted: #edf2ff;
+    --color-border: #d5dcf0;
+    --color-text-primary: #1a2240;
+    --color-text-secondary: #586483;
+    --color-accent: #5b66f6;
+    --color-accent-strong: #3f4fe0;
+    --color-highlight: #ff5e8a;
+    --color-scroll-thumb: #bdc8e8;
+    --color-scroll-thumb-hover: #9eacd5;
 
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    --shadow-sm: 0 2px 10px rgb(20 36 66 / 8%);
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow-sm: 0 10px 30px rgb(48 70 140 / 10%);
 }
 
 body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: "Elms Sans", sans-serif;
+    font-family: "Elms Sans", "Inter", "Segoe UI", sans-serif;
     font-weight: 400;
     color: var(--color-text-primary);
-    background: linear-gradient(180deg, #f7f9fd 0%, var(--color-bg) 100%);
+    background:
+        radial-gradient(circle at 10% -10%, rgb(91 102 246 / 20%), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgb(255 94 138 / 12%), transparent 30%),
+        linear-gradient(180deg, #f9faff 0%, var(--color-bg) 100%);
 }

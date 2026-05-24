@@ -91,7 +91,3 @@ Contributions are welcome! Please:
 - **Vite docs**: [https://vite.dev/](https://vite.dev/)
 - **React docs**: [https://react.dev/](https://react.dev/)
 - **Issues**: open a ticket in the [GitHub Issues](../../issues) tab
-
-## License
-
-See [LICENSE](LICENSE) for details.
